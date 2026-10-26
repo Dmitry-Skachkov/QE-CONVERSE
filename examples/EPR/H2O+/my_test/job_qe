@@ -1,5 +1,5 @@
 #!/bin/sh -l
-#SBATCH -A phy230182
+#SBATCH -A <account>
 #SBATCH -p highmem
 #SBATCH --nodes=1
 #SBATCH --ntasks=6
