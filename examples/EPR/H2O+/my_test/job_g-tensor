@@ -1,5 +1,5 @@
 #!/bin/sh -l
-#SBATCH -A phy230182
+#SBATCH -A <account>
 #SBATCH -p highmem
 #SBATCH --nodes=1
 #SBATCH --ntasks=6
@@ -7,11 +7,9 @@
 #SBATCH --job-name QE-CONVERSE
 #SBATCH -t 1:00:00
 
-NAME="gtensor"
-
-for DIR in 1 2 3 
+for i in 1 2 3 
 do
-cat > ${NAME}_${DIR}.in << EOF
+cat > g_${i}.in << EOF
 
 &input_qeconverse
         prefix = 'd'
@@ -23,12 +21,11 @@ cat > ${NAME}_${DIR}.in << EOF
         diago_thr_init = 1d-4
         conv_threshold = 1d-8
         mixing_beta = 0.5
-        lambda_so(${DIR}) = 1.0
+        lambda_so(${i}) = 1.0
 /
 EOF
 
-mpirun -np 6 qe-converse.x  < ${NAME}_${DIR}.in > ${NAME}_${DIR}.out
-echo ${NAME}_${DIR}
+mpirun -np 6 qe-converse.x  < g_${i}.in > g_${i}.out
 
 done
 
